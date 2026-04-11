@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desconecte-se para Viver — O que as redes sociais estão fazendo com você</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --preto:      #0f0e0b;
+      --creme:      #f5f0e6;
+      --creme2:     #ede7d4;
+      --vermelho:   #c23b22;
+      --vermelho2:  #e05535;
+      --dourado:    #c9963a;
+      --cinza:      #6b6456;
+      --verde-vida: #2d6a4f;
+      --verde-claro:#52b788;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--creme);
+      color: var(--preto);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── CAPA ── */
+    .capa {
+      background: var(--preto);
+      color: var(--creme);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capa::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(194,59,34,.18) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+      background-size: cover, 400px 400px;
+      pointer-events: none;
+    }
+
+    /* Linha decorativa */
+    .capa::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--dourado));
+    }
+
+    .capa__kicker {
+      font-family: 'Source Serif 4', serif;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--vermelho2);
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .capa__titulo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -.02em;
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .capa__titulo em {
+      font-style: italic;
+      color: var(--vermelho2);
+    }
+
+    .capa__linha {
+      width: 60px;
+      height: 3px;
+      background: var(--dourado);
+      margin: 36px auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .capa__subtitulo {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(245,240,230,.75);
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    .capa__fonte {
+      margin-top: 48px;
+      font-size: .72rem;
+      color: rgba(245,240,230,.35);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAVEGAÇÃO ── */
+    .nav-ancora {
+      background: var(--preto);
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-ancora a {
+      color: rgba(245,240,230,.5);
+      text-decoration: none;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color .2s;
+    }
+
+    .nav-ancora a:hover { color: var(--vermelho2); }
+
+    /* ── LAYOUT GERAL ── */
+    .artigo {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--creme2);
+    }
+
+    .intro__lead {
+      font-size: 1.35rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cinza);
+      line-height: 1.7;
+      padding-left: 24px;
+      border-left: 3px solid var(--vermelho);
+      margin-bottom: 32px;
+    }
+
+    .intro__corpo p { margin-bottom: 20px; }
+
+    /* ── SEÇÕES ── */
+    .secao {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--creme2);
+    }
+
+    .secao__numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--creme2);
+      line-height: 1;
+      margin-bottom: -20px;
+      user-select: none;
+    }
+
+    .secao__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--preto);
+    }
+
+    .secao__titulo--vermelho { color: var(--vermelho); }
+
+    .secao__subtag {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--vermelho2);
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .secao p { margin-bottom: 20px; color: #2a261f; }
+
+    /* ── DADO NUMÉRICO ── */
+    .dado {
+      background: var(--preto);
+      color: var(--creme);
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin: 36px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .dado__numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--vermelho2);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 120px;
+    }
+
+    .dado__texto {
+      font-size: .95rem;
+      font-weight: 300;
+      color: rgba(245,240,230,.8);
+      line-height: 1.6;
+      padding-top: 6px;
+    }
+
+    .dado__fonte {
+      font-size: .68rem;
+      color: rgba(245,240,230,.35);
+      display: block;
+      margin-top: 8px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* ── LISTA DE DOENÇAS ── */
+    .doencas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 36px 0;
+    }
+
+    .doenca-card {
+      border: 1.5px solid var(--creme2);
+      border-radius: 4px;
+      padding: 20px;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .doenca-card:hover {
+      border-color: var(--vermelho);
+      transform: translateY(-3px);
+    }
+
+    .doenca-card__icon { font-size: 1.8rem; margin-bottom: 10px; }
+
+    .doenca-card__nome {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .doenca-card__desc {
+      font-size: .82rem;
+      color: var(--cinza);
+      line-height: 1.5;
+    }
+
+    /* ── CITAÇÃO DESTAQUE ── */
+    .citacao {
+      margin: 48px 0;
+      padding: 0 32px;
+      border-left: 4px solid var(--dourado);
+    }
+
+    .citacao__texto {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--preto);
+      margin-bottom: 12px;
+    }
+
+    .citacao__autor {
+      font-size: .75rem;
+      color: var(--cinza);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ── IMPACTOS LISTADOS ── */
+    .impacto-lista {
+      list-style: none;
+      margin: 32px 0;
+    }
+
+    .impacto-lista li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--creme2);
+      font-size: .97rem;
+    }
+
+    .impacto-lista li:last-child { border-bottom: none; }
+
+    .impacto-lista__icone {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(194,59,34,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .impacto-lista__corpo strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--preto);
+    }
+
+    .impacto-lista__corpo span {
+      color: var(--cinza);
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+
+    /* ── SEÇÃO VIDA REAL (verde) ── */
+    .secao-vida {
+      background: var(--verde-vida);
+      color: var(--creme);
+      padding: 80px 0;
+    }
+
+    .secao-vida .artigo { padding-top: 0; padding-bottom: 0; }
+
+    .secao-vida .secao__numero { color: rgba(255,255,255,.1); }
+
+    .secao-vida .secao__titulo { color: var(--creme); }
+
+    .secao-vida .secao__subtag { color: var(--verde-claro); }
+
+    .secao-vida p { color: rgba(245,240,230,.85); }
+
+    .beneficio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .beneficio-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 6px;
+      padding: 28px 22px;
+      transition: background .2s, transform .2s;
+    }
+
+    .beneficio-card:hover {
+      background: rgba(255,255,255,.14);
+      transform: translateY(-4px);
+    }
+
+    .beneficio-card__icon { font-size: 2rem; margin-bottom: 14px; }
+
+    .beneficio-card__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .beneficio-card__desc {
+      font-size: .85rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.55;
+    }
+
+    /* ── DICAS PRÁTICAS ── */
+    .dicas {
+      counter-reset: dica;
+      list-style: none;
+      margin: 36px 0;
+    }
+
+    .dicas li {
+      counter-increment: dica;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .dicas li::before {
+      content: counter(dica, decimal-leading-zero);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--verde-claro);
+      flex-shrink: 0;
+      min-width: 40px;
+      line-height: 1.2;
+    }
+
+    .dicas__corpo strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .dicas__corpo span {
+      font-size: .88rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.55;
+    }
+
+    /* ── CONCLUSÃO ── */
+    .conclusao {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .conclusao__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+
+    .conclusao__texto {
+      font-size: 1.1rem;
+      color: var(--cinza);
+      max-width: 580px;
+      margin: 0 auto 40px;
+      font-style: italic;
+    }
+
+    .conclusao__linha {
+      width: 50px;
+      height: 3px;
+      background: var(--vermelho);
+      margin: 0 auto 40px;
+    }
+
+    .cta {
+      display: inline-block;
+      background: var(--preto);
+      color: var(--creme);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 3px;
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: background .2s, transform .2s;
+    }
+
+    .cta:hover {
+      background: var(--vermelho);
+      transform: translateY(-2px);
+    }
+
+    /* ── RODAPÉ ── */
+    .rodape {
+      background: var(--preto);
+      color: rgba(245,240,230,.35);
+      text-align: center;
+      padding: 40px 24px;
+      font-size: .78rem;
+      line-height: 1.8;
+      letter-spacing: .04em;
+    }
+
+    .rodape strong { color: rgba(245,240,230,.6); }
+
+    /* ── SEPARADOR ── */
+    .sep {
+      text-align: center;
+      color: var(--dourado);
+      font-size: 1.2rem;
+      letter-spacing: .4em;
+      padding: 8px 0;
+      opacity: .5;
+    }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 640px) {
+      .dado { flex-direction: column; gap: 12px; }
+      .dado__numero { font-size: 2.8rem; min-width: auto; }
+      .nav-ancora { gap: 16px; }
+      .nav-ancora a { font-size: .65rem; }
+    }
+
+    /* ── ANIMAÇÕES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .capa__kicker  { animation: fadeUp .6s ease .2s both; }
+    .capa__titulo  { animation: fadeUp .6s ease .4s both; }
+    .capa__linha   { animation: fadeUp .6s ease .6s both; }
+    .capa__subtitulo { animation: fadeUp .6s ease .8s both; }
+    .capa__fonte   { animation: fadeUp .6s ease 1s both; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ CAPA ══════════════ -->
+<section class="capa">
+  <p class="capa__kicker">Conscientização · Saúde Mental · Vida Real</p>
+  <h1 class="capa__titulo">O que as redes sociais<br>estão fazendo com <em>você</em></h1>
+  <div class="capa__linha"></div>
+  <p class="capa__subtitulo">Um olhar honesto sobre os impactos do uso excessivo das redes sociais na saúde mental de jovens e adultos no Brasil</p>
+  <p class="capa__fonte">Baseado em revisões científicas · Revista Foco 2024 · Rev. Brasileira de Iniciação Científica 2021</p>
+</section>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav class="nav-ancora">
+  <a href="#problema">O Problema</a>
+  <a href="#impactos">Impactos</a>
+  <a href="#doencas">Transtornos</a>
+  <a href="#numeros">Números</a>
+  <a href="#vida-real">Vida Real</a>
+  <a href="#dicas">O que fazer</a>
+</nav>
+
+<article class="artigo">
+
+  <!-- ══════════════ INTRO ══════════════ -->
+  <section class="intro">
+    <p class="intro__lead">
+      Você sabe exatamente quantas horas passou nas redes sociais hoje? A maioria das pessoas não sabe. E é justamente aí que o problema começa.
+    </p>
+    <div class="intro__corpo">
+      <p>As redes sociais nasceram com uma promessa bonita: conectar pessoas. E em muitos aspectos, cumpriram essa promessa. Mas existe um lado que ninguém mostra nos stories: o peso silencioso que esse uso excessivo causa na cabeça e no corpo de quem está sempre conectado.</p>
+      <p>Este artigo reúne os principais achados de pesquisas científicas realizadas no Brasil e no mundo para mostrar, de forma simples e direta, o que acontece com quem passa horas mergulhado nas redes — e o que muda quando a gente escolhe desconectar.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════ O PROBLEMA ══════════════ -->
+  <section class="secao" id="problema">
+    <div class="secao__numero">01</div>
+    <h2 class="secao__titulo secao__titulo--vermelho">A armadilha que a gente não vê</h2>
+    <span class="secao__subtag">O uso e o vício</span>
+
+    <p>Existe uma linha muito tênue entre usar as redes sociais por hábito e ser controlado por elas. Quando você sente aquela coceira de pegar o celular toda vez que fica parado por dois minutos, quando acorda e o primeiro gesto é desbloquear a tela — esse é o sinal de que as redes já fazem parte do seu sistema de recompensa, da mesma forma que o açúcar ou qualquer outro vício.</p>
+
+    <div class="dado">
+      <div class="dado__numero">134<span style="font-size:1.5rem">M</span></div>
+      <div class="dado__texto">
+        de brasileiros usam a internet pelo celular. As ferramentas mais acessadas são exatamente as redes sociais e aplicativos de mensagens.
+        <span class="dado__fonte">Brunelli, 2019 — citado na Revista Foco 2024</span>
+      </div>
+    </div>
+
+    <p>E não é só questão de tempo gasto. O problema real é o que acontece dentro da nossa cabeça enquanto ficamos conectados: comparação constante, busca por curtidas, medo de perder algo, ansiedade por respostas. Tudo isso ativa e esgota o nosso sistema nervoso sem que a gente perceba.</p>
+
+    <div class="dado">
+      <div class="dado__numero">86<span style="font-size:1.5rem">%</span></div>
+      <div class="dado__texto">
+        dos jovens brasileiros estão conectados à internet, o que equivale a 24,3 milhões de usuários nessa faixa etária — e o número cresce a cada ano.
+        <span class="dado__fonte">De Silva Junior, 2022 — citado na Revista Foco 2024</span>
+      </div>
+    </div>
+
+    <p>Os pesquisadores chamam esse uso descontrolado de "Adicção por Internet": uma preocupação intensa com as redes, uso compulsivo, incapacidade de gerenciar o tempo online e afastamento gradual das relações presenciais. E ela já é considerada um dos novos transtornos psiquiátricos do século XXI.</p>
+  </section>
+
+  <!-- ══════════════ IMPACTOS ══════════════ -->
+  <section class="secao" id="impactos">
+    <div class="secao__numero">02</div>
+    <h2 class="secao__titulo">O que o uso excessivo<br>faz com você</h2>
+    <span class="secao__subtag">Impactos comprovados</span>
+
+    <p>Não estamos falando de suposições. As pesquisas são claras: quanto mais tempo alguém passa dependente das redes sociais, mais a sua saúde mental se deteriora. Veja os principais impactos identificados pelos estudos:</p>
+
+    <ul class="impacto-lista">
+      <li>
+        <div class="impacto-lista__icone">😔</div>
+        <div class="impacto-lista__corpo">
+          <strong>Baixa autoestima</strong>
+          <span>Quem usa muito as redes tende a se comparar constantemente com versões editadas e idealizadas da vida dos outros. O resultado é uma sensação crescente de que a sua própria vida é insuficiente.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">😰</div>
+        <div class="impacto-lista__corpo">
+          <strong>Ansiedade que não para</strong>
+          <span>A espera por respostas, a pressão por estar sempre disponível e o medo de perder alguma novidade criam um estado permanente de alerta. O cérebro nunca descansa de verdade.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">😶</div>
+        <div class="impacto-lista__corpo">
+          <strong>Solidão mesmo estando "conectado"</strong>
+          <span>Relacionamentos superficiais online não substituem o contato humano real. Muitos estudos mostram que quem mais usa redes sociais paradoxalmente se sente mais só.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">🌙</div>
+        <div class="impacto-lista__corpo">
+          <strong>Sono destruído</strong>
+          <span>A luz das telas e o estímulo mental das notificações interferem diretamente na produção de melatonina. O resultado: dificuldade para dormir, noites mal dormidas e cansaço crônico.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">🎓</div>
+        <div class="impacto-lista__corpo">
+          <strong>Queda no desempenho</strong>
+          <span>A concentração fica prejudicada. Estudos mostram piora no rendimento acadêmico e profissional diretamente ligada ao tempo excessivo nas redes sociais.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">🤝</div>
+        <div class="impacto-lista__corpo">
+          <strong>Afastamento das pessoas reais</strong>
+          <span>O tempo que antes seria dedicado à família, amigos e atividades físicas vai sendo consumido pela tela. As relações presenciais enfraquecem aos poucos, quase sem que a pessoa perceba.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">😡</div>
+        <div class="impacto-lista__corpo">
+          <strong>Irritabilidade e comportamento agressivo</strong>
+          <span>Pesquisas associam o uso excessivo ao aumento da hostilidade, impulsividade e comportamento compulsivo — especialmente quando o acesso às redes é interrompido.</span>
+        </div>
+      </li>
+      <li>
+        <div class="impacto-lista__icone">🍔</div>
+        <div class="impacto-lista__corpo">
+          <strong>Mudanças no corpo e na alimentação</strong>
+          <span>O tempo nas telas reduz a prática de atividade física, afeta os hábitos alimentares e, em mulheres jovens, está associado a uma relação mais negativa com a imagem corporal.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="citacao">
+      <p class="citacao__texto">"Indivíduos altamente dependentes de redes sociais tendem a ter menor autoestima e satisfação com a vida do que aqueles que as usam de forma moderada."</p>
+      <span class="citacao__autor">Revisão sistemática — Revista Foco, 2024</span>
+    </div>
+  </section>
+
+  <!-- ══════════════ TRANSTORNOS ══════════════ -->
+  <section class="secao" id="doencas">
+    <div class="secao__numero">03</div>
+    <h2 class="secao__titulo">Transtornos que o uso<br>excessivo pode causar</h2>
+    <span class="secao__subtag">O que os médicos dizem</span>
+
+    <p>Além dos efeitos do dia a dia, o uso descontrolado das redes sociais está diretamente ligado ao desenvolvimento de transtornos mentais reconhecidos pela ciência. Os três mais comuns são:</p>
+
+    <div class="dado">
+      <div class="dado__numero" style="color: var(--vermelho2); font-size:2.8rem;">Ansiedade</div>
+      <div class="dado__texto">
+        A ansiedade patológica causada pelas redes vai muito além do nervosismo normal. Ela interfere no trabalho, nos relacionamentos e na qualidade de vida. No Brasil, o uso excessivo da internet está diretamente associado ao aumento de casos.
+        <span class="dado__fonte">Perez-Oyola et al., 2023 — 3 em cada 10 estudantes apresentaram ansiedade associada ao uso problemático</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero" style="color: var(--vermelho2); font-size:2.8rem;">Depressão</div>
+      <div class="dado__texto">
+        A comparação constante, o isolamento e o ciclo de recompensa das curtidas alimentam quadros depressivos. A depressão é atualmente a maior causa de afastamento de jovens em todo o mundo.
+        <span class="dado__fonte">OMS — ao menos 350 milhões de pessoas vivem com depressão globalmente. Pesquisa Nacional de Saúde 2013: prevalência de 7,6% na população adulta brasileira.</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero" style="color: var(--vermelho2); font-size:2.5rem;">Cyberbullying</div>
+      <div class="dado__texto">
+        A violência online causa os mesmos danos que o bullying presencial: queda na autoestima, humilhação, medo e desmotivação. Em casos extremos, está diretamente relacionada a comportamentos autodestrutivos.
+        <span class="dado__fonte">Ribeiro et al., 2021 — estudo italiano com adolescentes confirmou que o uso problemático de redes é um dos principais impulsionadores do cyberbullying.</span>
+      </div>
+    </div>
+
+    <p>Além desses três, os estudos identificaram outros transtornos menos conhecidos mas cada vez mais comuns:</p>
+
+    <div class="doencas-grid">
+      <div class="doenca-card">
+        <div class="doenca-card__icon">📳</div>
+        <p class="doenca-card__nome">Nomophobia</p>
+        <p class="doenca-card__desc">Ansiedade intensa ao ficar sem acesso ao celular ou internet, mesmo por pouco tempo.</p>
+      </div>
+      <div class="doenca-card">
+        <div class="doenca-card__icon">🌀</div>
+        <p class="doenca-card__nome">Síndrome do Toque Fantasma</p>
+        <p class="doenca-card__desc">O cérebro passa a "sentir" o celular vibrando mesmo quando isso não aconteceu.</p>
+      </div>
+      <div class="doenca-card">
+        <div class="doenca-card__icon">🤳</div>
+        <p class="doenca-card__nome">Narcisismo Digital</p>
+        <p class="doenca-card__desc">Obsessão com a própria imagem nas redes, selfies excessivas e preocupação extrema com a aparência online.</p>
+      </div>
+      <div class="doenca-card">
+        <div class="doenca-card__icon">🌑</div>
+        <p class="doenca-card__nome">Isolamento Social</p>
+        <p class="doenca-card__desc">O mundo virtual substitui o presencial. A pessoa troca o dia pela noite e perde a conexão com a vida real.</p>
+      </div>
+      <div class="doenca-card">
+        <div class="doenca-card__icon">😮</div>
+        <p class="doenca-card__nome">FOMO</p>
+        <p class="doenca-card__desc">Fear of Missing Out — o medo de estar perdendo algo importante nas redes gera ansiedade e compulsão por checagem constante.</p>
+      </div>
+      <div class="doenca-card">
+        <div class="doenca-card__icon">🛑</div>
+        <p class="doenca-card__nome">Dep. de Internet</p>
+        <p class="doenca-card__desc">Uso compulsivo que interfere no trabalho, nos estudos e nas relações pessoais. Já reconhecido como transtorno psiquiátrico.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ NÚMEROS ══════════════ -->
+  <section class="secao" id="numeros">
+    <div class="secao__numero">04</div>
+    <h2 class="secao__titulo">Os números que<br>ninguém mostra</h2>
+    <span class="secao__subtag">Dados que falam por si</span>
+
+    <p>Às vezes, uma estatística diz mais do que muitas palavras. Veja o retrato real do uso das redes sociais no Brasil e no mundo:</p>
+
+    <div class="dado">
+      <div class="dado__numero">9h<span style="font-size:1.5rem">29</span></div>
+      <div class="dado__texto">
+        O Brasil é o 2º país do mundo que mais passa tempo por dia na internet. Desse total, 40% — quase 3 horas e meia — são gastos apenas nas redes sociais.
+        <span class="dado__fonte">CRISPIM, 2022 — citado na Revista Foco 2024</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero">70<span style="font-size:1.5rem">%</span></div>
+      <div class="dado__texto">
+        da população brasileira tem acesso à internet. O crescimento do acesso amplia diretamente o número de pessoas em risco de desenvolvimento de dependência digital.
+        <span class="dado__fonte">IBGE — citado na Revista Foco 2024</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero">21<span style="font-size:1.5rem">%</span></div>
+      <div class="dado__texto">
+        dos adolescentes entre 12 e 16 anos apresentaram dependência de internet em pesquisa realizada com escolas públicas e privadas brasileiras — sem diferença significativa entre os grupos.
+        <span class="dado__fonte">Machado et al., 2018 — citado na RBIC 2021</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero">2 em 10</div>
+      <div class="dado__texto">
+        estudantes do ensino médio apresentaram transtorno de dependência de internet. 3 em cada 10 apresentaram ansiedade. O estudo foi feito durante a pandemia, mas os padrões persistem.
+        <span class="dado__fonte">Perez-Oyola et al., 2023</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero">350<span style="font-size:1.5rem">M</span></div>
+      <div class="dado__texto">
+        de pessoas no mundo vivem com depressão, segundo a OMS. Os transtornos mentais — especialmente ansiedade e depressão — são uma das principais causas de afastamento e morbidade na sociedade atual.
+        <span class="dado__fonte">Organização Mundial da Saúde — citada na Revista Foco 2024</span>
+      </div>
+    </div>
+
+    <div class="dado">
+      <div class="dado__numero">70<span style="font-size:1.5rem">%</span></div>
+      <div class="dado__texto">
+        dos jovens no mundo estão inseridos no mundo digital. Desses, 64% acessam as redes sociais diariamente — em plena fase de construção da identidade, quando são mais vulneráveis à influência externa.
+        <span class="dado__fonte">UNICEF, 2013 — citado na RBIC 2021</span>
+      </div>
+    </div>
+
+    <div class="sep">· · ·</div>
+
+    <div class="citacao">
+      <p class="citacao__texto">"A adicção por internet já é considerada uma epidemia do século XXI, digna de preocupação como um problema mundial de saúde mental."</p>
+      <span class="citacao__autor">Moromizato et al., 2017</span>
+    </div>
+  </section>
+
+</article>
+
+<!-- ══════════════ VIDA REAL ══════════════ -->
+<section class="secao-vida" id="vida-real">
+  <div class="artigo">
+    <div class="secao__numero">05</div>
+    <h2 class="secao__titulo">O que você ganha<br>quando desconecta</h2>
+    <span class="secao__subtag">Os benefícios da vida presencial</span>
+
+    <p>Desconectar não é punição. É um presente que você dá a si mesmo. Quando você reduz o tempo nas redes e investe nas experiências reais, seu cérebro e seu corpo começam a responder de formas que nenhuma curtida é capaz de proporcionar.</p>
+
+    <div class="beneficio-grid">
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🧠</div>
+        <p class="beneficio-card__titulo">Mente mais tranquila</p>
+        <p class="beneficio-card__desc">Sem a pressão das notificações e da comparação constante, os níveis de ansiedade caem naturalmente. O cérebro finalmente descansa.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">😴</div>
+        <p class="beneficio-card__titulo">Sono de verdade</p>
+        <p class="beneficio-card__desc">Longe das telas antes de dormir, a qualidade do sono melhora significativamente. Você acorda com mais energia e foco.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">❤️</div>
+        <p class="beneficio-card__titulo">Relações mais profundas</p>
+        <p class="beneficio-card__desc">Presença de verdade nas conversas, olho no olho, abraço real — esses momentos constroem vínculos que nenhuma rede social consegue replicar.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🌿</div>
+        <p class="beneficio-card__titulo">Mais autoestima</p>
+        <p class="beneficio-card__desc">Sem a comparação constante com perfis editados, você para de medir o seu valor pela régua dos outros e começa a se enxergar de forma mais justa.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🏃</div>
+        <p class="beneficio-card__titulo">Corpo mais ativo</p>
+        <p class="beneficio-card__desc">O tempo que estava na tela pode virar caminhada, dança, esporte ou qualquer atividade física — que libera dopamina de forma saudável e duradoura.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🎯</div>
+        <p class="beneficio-card__titulo">Foco e produtividade</p>
+        <p class="beneficio-card__desc">Sem interrupções constantes, a capacidade de concentração volta a funcionar. Estudos e tarefas ficam mais fáceis e satisfatórios.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🎨</div>
+        <p class="beneficio-card__titulo">Criatividade em alta</p>
+        <p class="beneficio-card__desc">O tédio — que as redes eliminam o tempo todo — é o berço da criatividade. Quando a mente descansa, as melhores ideias aparecem.</p>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-card__icon">🌍</div>
+        <p class="beneficio-card__titulo">Conexão com o mundo real</p>
+        <p class="beneficio-card__desc">Passeios, eventos culturais, voluntariado, atividades comunitárias — experiências presenciais que alimentam a alma de formas que a tela nunca vai conseguir.</p>
+      </div>
+    </div>
+
+    <br /><br />
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; margin-bottom:8px;">O que fazer na prática</h3>
+    <span class="secao__subtag">Pequenos passos, grandes mudanças</span>
+
+    <ol class="dicas" id="dicas">
+      <li>
+        <div class="dicas__corpo">
+          <strong>Saiba quanto tempo você passa nas redes</strong>
+          <span>Ative o monitoramento de tempo de tela no seu celular. Muitos ficam surpresos — e esse susto é o primeiro passo para mudar. Instagram e Facebook já têm essa função integrada.</span>
+        </div>
+      </li>
+      <li>
+        <div class="dicas__corpo">
+          <strong>Crie uma rotina sem celular ao acordar e antes de dormir</strong>
+          <span>Os primeiros e os últimos 30 minutos do dia são os mais valiosos. Use-os para algo que você controla — não para o feed de outra pessoa.</span>
+        </div>
+      </li>
+      <li>
+        <div class="dicas__corpo">
+          <strong>Substitua, não apenas corte</strong>
+          <span>Em vez de só tirar as redes, coloque algo no lugar: um hobby, uma atividade física, uma aula, um encontro com amigos. Seu cérebro precisa de uma nova recompensa.</span>
+        </div>
+      </li>
+      <li>
+        <div class="dicas__corpo">
+          <strong>Desligue as notificações</strong>
+          <span>Você não precisa saber de tudo em tempo real. Checar as redes nos seus próprios horários — e não quando o app decide — já muda muito a relação com o celular.</span>
+        </div>
+      </li>
+      <li>
+        <div class="dicas__corpo">
+          <strong>Busque atividades culturais e comunitárias</strong>
+          <span>Shows, centros culturais, oficinas, grupos esportivos, projetos sociais — existem milhares de opções em todo o Brasil. Experiências presenciais constroem memórias reais e relações duradouras.</span>
+        </div>
+      </li>
+      <li>
+        <div class="dicas__corpo">
+          <strong>Converse com alguém de confiança ou um profissional</strong>
+          <span>Se o uso está interferindo no seu sono, nas suas relações ou no seu humor, não hesite. Psicólogos e terapeutas podem ajudar a reconstruir uma relação saudável com a tecnologia.</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════ CONCLUSÃO ══════════════ -->
+<article class="artigo">
+  <section class="conclusao">
+    <div class="conclusao__linha"></div>
+    <h2 class="conclusao__titulo">A vida acontece<br>fora da tela.</h2>
+    <p class="conclusao__texto">As redes sociais não são o problema em si — o problema é quando elas deixam de ser uma ferramenta e passam a ser o centro da sua existência. Você não precisa deletar tudo. Precisa reconquistar o controle.</p>
+    <p class="conclusao__texto">O primeiro passo é a consciência. E você já deu esse passo ao chegar até aqui.</p>
+    <a class="cta" href="#problema">Ler novamente</a>
+    <a href="quiz-redes-sociais1.html" class="cta">Quiz Redes Sociais →</a>
+  </section>
+</article>
+
+<!-- ══════════════ RODAPÉ ══════════════ -->
+<footer class="rodape">
+  <p><strong>Fontes científicas utilizadas</strong></p>
+  <p>NORONHA, J.F.M. et al. <em>Avaliando o Impacto do Uso Excessivo das Redes Sociais na Saúde Mental dos Jovens no Brasil.</em> Revista Foco, v.17, n.11, 2024.</p>
+  <p>LIMA, M.E.F.; SILVA, H.M.A.; MARTINS, C.S. <em>Adicção por Internet e suas Implicações para o Transtorno de Ansiedade Social.</em> RBIC, IFSP Itapetininga, v.8, 2021.</p>
+  <br />
+  <p>Projeto acadêmico · Conscientização sobre saúde mental e uso responsável das redes sociais</p>
+</footer>
+
+</body>
+</html>

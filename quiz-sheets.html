@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz — Como está sua relação com as redes sociais?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ══ TOKENS ══ */
+    :root {
+      --preto:     #0f0e0b;
+      --creme:     #f5f0e6;
+      --creme2:    #ede7d4;
+      --creme3:    #e2dbc8;
+      --cinza:     #6b6456;
+      --vermelho:  #c23b22;
+      --laranja:   #e07b35;
+      --amarelo:   #c9963a;
+      --verde:     #2d6a4f;
+      --verde-cl:  #52b788;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--creme);
+      color: var(--preto);
+      min-height: 100vh;
+    }
+
+    /* ══ CAPA ══ */
+    .capa {
+      background: var(--preto);
+      color: var(--creme);
+      padding: 72px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capa::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(194,59,34,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .capa__badge {
+      display: inline-block;
+      background: rgba(194,59,34,.25);
+      border: 1px solid rgba(194,59,34,.4);
+      color: #f0a070;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .5s ease .1s both;
+    }
+
+    .capa__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      max-width: 720px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .5s ease .25s both;
+    }
+
+    .capa__titulo em {
+      font-style: italic;
+      color: #f0a070;
+    }
+
+    .capa__sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245,240,230,.65);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .5s ease .4s both;
+    }
+
+    .capa__fonte {
+      font-size: .68rem;
+      color: rgba(245,240,230,.28);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp .5s ease .55s both;
+    }
+
+    /* ══ BARRA DE PROGRESSO ══ */
+    .progresso-wrap {
+      background: var(--creme2);
+      padding: 20px 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--creme3);
+    }
+
+    .progresso-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 720px;
+      margin: 0 auto 10px;
+    }
+
+    .progresso-info__texto {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--cinza);
+    }
+
+    .progresso-info__num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--preto);
+    }
+
+    .progresso-barra {
+      max-width: 720px;
+      margin: 0 auto;
+      height: 4px;
+      background: var(--creme3);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progresso-barra__fill {
+      height: 100%;
+      background: var(--vermelho);
+      border-radius: 100px;
+      width: 0%;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    .progresso-categorias {
+      display: flex;
+      gap: 6px;
+      max-width: 720px;
+      margin: 10px auto 0;
+      padding-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .cat-tag {
+      font-size: .62rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--creme3);
+      color: var(--cinza);
+      font-weight: 600;
+      transition: all .3s;
+    }
+
+    .cat-tag.ativo {
+      background: var(--preto);
+      color: var(--creme);
+      border-color: var(--preto);
+    }
+
+    /* ══ ÁREA DO QUIZ ══ */
+    .quiz-area {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ══ QUESTÃO ══ */
+    .questao {
+      display: none;
+      animation: fadeUp .4s ease both;
+    }
+
+    .questao.ativa { display: block; }
+
+    .questao__categoria {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--vermelho);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .questao__categoria::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      background: var(--vermelho);
+    }
+
+    .questao__numero {
+      font-family: 'Playfair Display', serif;
+      font-size: .85rem;
+      color: var(--cinza);
+      margin-bottom: 6px;
+    }
+
+    .questao__texto {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3.5vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--preto);
+      margin-bottom: 8px;
+    }
+
+    .questao__contexto {
+      font-size: .88rem;
+      color: var(--cinza);
+      font-style: italic;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    /* ══ OPÇÕES ══ */
+    .opcoes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .opcao {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      border: 2px solid var(--creme3);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+      background: #fff;
+    }
+
+    .opcao:hover {
+      border-color: var(--preto);
+      transform: translateX(4px);
+    }
+
+    .opcao.selecionada {
+      border-color: var(--preto);
+      background: var(--preto);
+    }
+
+    .opcao.selecionada .opcao__pontos,
+    .opcao.selecionada .opcao__texto { color: var(--creme); }
+
+    .opcao.selecionada .opcao__letra { background: var(--vermelho); color: #fff; }
+
+    .opcao__letra {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      min-height: 54px;
+      background: var(--creme2);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--cinza);
+      flex-shrink: 0;
+      transition: background .2s, color .2s;
+    }
+
+    .opcao__corpo {
+      padding: 14px 16px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .opcao__texto {
+      font-size: .95rem;
+      line-height: 1.5;
+      color: var(--preto);
+      transition: color .2s;
+    }
+
+    .opcao__pontos {
+      font-family: 'Playfair Display', serif;
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--cinza);
+      letter-spacing: .06em;
+      white-space: nowrap;
+      opacity: .5;
+      transition: color .2s;
+    }
+
+    /* ══ NAVEGAÇÃO ══ */
+    .nav-quiz {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+
+    .btn--primario {
+      background: var(--preto);
+      color: var(--creme);
+    }
+
+    .btn--primario:hover { background: var(--vermelho); }
+    .btn--primario:disabled { opacity: .3; cursor: not-allowed; }
+    .btn--primario:disabled:hover { background: var(--preto); }
+
+    .btn--secundario {
+      background: transparent;
+      color: var(--cinza);
+      border: 1.5px solid var(--creme3);
+    }
+
+    .btn--secundario:hover { border-color: var(--preto); color: var(--preto); }
+
+    .btn--finalizar {
+      background: var(--verde);
+      color: #fff;
+    }
+
+    .btn--finalizar:hover { background: #1d4d38; }
+    .btn--finalizar:disabled { opacity: .3; cursor: not-allowed; }
+    .btn--finalizar:disabled:hover { background: var(--verde); }
+
+    /* ══ RESULTADO ══ */
+    .resultado {
+      display: none;
+      animation: fadeUp .5s ease both;
+    }
+
+    .resultado.ativo { display: block; }
+
+    .resultado__header {
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+
+    .resultado__emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .resultado__nivel {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .resultado__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .resultado__pontuacao {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--cinza);
+      margin-bottom: 24px;
+    }
+
+    .resultado__pontuacao strong {
+      font-size: 2.2rem;
+      font-weight: 900;
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .resultado__descricao {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 580px;
+      margin: 0 auto;
+      color: #2a261f;
+    }
+
+    /* Faixa colorida por resultado */
+    .resultado__header--verde  { background: #e8f5ee; }
+    .resultado__header--amarelo { background: #fef6e4; }
+    .resultado__header--laranja { background: #fdecd9; }
+    .resultado__header--vermelho { background: #fde8e4; }
+
+    .nivel--verde  { color: var(--verde); }
+    .nivel--amarelo { color: var(--amarelo); }
+    .nivel--laranja { color: var(--laranja); }
+    .nivel--vermelho { color: var(--vermelho); }
+
+    /* ══ PERFIL POR DIMENSÃO ══ */
+    .dimensoes {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .dimensoes__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .dimensoes__sub {
+      font-size: .8rem;
+      color: var(--cinza);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .dim-item {
+      margin-bottom: 20px;
+    }
+
+    .dim-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .dim-item__nome {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--preto);
+      letter-spacing: .04em;
+    }
+
+    .dim-item__valor {
+      font-family: 'Playfair Display', serif;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--cinza);
+    }
+
+    .dim-barra {
+      height: 8px;
+      background: var(--creme2);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .dim-barra__fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 1s cubic-bezier(.4,0,.2,1) .3s;
+    }
+
+    .fill--verde   { background: var(--verde-cl); }
+    .fill--amarelo { background: var(--amarelo); }
+    .fill--laranja { background: var(--laranja); }
+    .fill--vermelho{ background: var(--vermelho); }
+
+    .dim-item__obs {
+      font-size: .78rem;
+      color: var(--cinza);
+      margin-top: 5px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ══ RECOMENDAÇÕES ══ */
+    .recomendacoes {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+
+    .recomendacoes__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .recomendacoes__sub {
+      font-size: .8rem;
+      color: var(--cinza);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .rec-lista { list-style: none; }
+
+    .rec-lista li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--creme2);
+      font-size: .93rem;
+      line-height: 1.6;
+    }
+
+    .rec-lista li:last-child { border-bottom: none; }
+
+    .rec-icone {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ══ FONTE CIENTÍFICA ══ */
+    .fonte-box {
+      max-width: 720px;
+      margin: 0 auto 40px;
+      padding: 20px 24px;
+      border-left: 3px solid var(--creme3);
+    }
+
+    .fonte-box p {
+      font-size: .75rem;
+      color: var(--cinza);
+      line-height: 1.7;
+    }
+
+    .fonte-box strong { color: var(--preto); }
+
+    /* ══ AÇÕES FINAIS ══ */
+    .acoes-finais {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 24px 64px;
+    }
+
+    .btn--refazer {
+    /* Mantenha o que você já tem e adicione/ajuste o seguinte: */
+    display: inline-block;      /* Permite que o link aceite padding e largura */
+    text-decoration: none;      /* Remove o sublinhado roxo/azul padrão */
+    text-align: center;         /* Centraliza o texto */
+    vertical-align: middle;     /* Alinha com o botão ao lado caso necessário */
+    
+    /* Suas propriedades atuais que devem permanecer: */
+    background: var(--preto);
+    color: var(--creme);
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: .95rem;
+    cursor: pointer;
+    border: none;
+    transition: background .2s;
+    }
+    .btn--refazer:hover { background: var(--vermelho); }
+
+    /* ══ ANIMAÇÕES ══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══ RESPONSIVO ══ */
+    @media (max-width: 560px) {
+      .opcao__pontos { display: none; }
+      .nav-quiz { flex-direction: column-reverse; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ CAPA ══════════ -->
+<header class="capa">
+  <span class="capa__badge">Quiz científico · 12 perguntas</span>
+  <h1 class="capa__titulo">Como está sua <em>relação</em><br>com as redes sociais?</h1>
+  <p class="capa__sub">Responda com honestidade. Não existe resposta certa ou errada — apenas o seu retrato real.</p>
+  <p class="capa__fonte">Baseado nas dimensões do Internet Addiction Test (IAT) · Kimberly Young, 1998 · Validado no Brasil (2012) e em Portugal (2014)</p>
+</header>
+
+<!-- ══════════ BARRA DE PROGRESSO ══════════ -->
+<div class="progresso-wrap" id="progresso-wrap">
+  <div class="progresso-info">
+    <span class="progresso-info__texto">Questão <span id="q-atual">1</span> de 12</span>
+    <span class="progresso-info__num"><span id="pct">0</span>%</span>
+  </div>
+  <div class="progresso-barra">
+    <div class="progresso-barra__fill" id="barra-fill"></div>
+  </div>
+  <div class="progresso-categorias">
+    <span class="cat-tag" id="cat-tempo">⏰ Tempo</span>
+    <span class="cat-tag" id="cat-humor">😶 Humor</span>
+    <span class="cat-tag" id="cat-controle">🔁 Controle</span>
+    <span class="cat-tag" id="cat-social">👥 Social</span>
+    <span class="cat-tag" id="cat-sono">🌙 Sono</span>
+    <span class="cat-tag" id="cat-realidade">🪞 Realidade</span>
+  </div>
+</div>
+
+<!-- ══════════ QUIZ ══════════ -->
+<main class="quiz-area" id="quiz-area">
+
+  <!-- QUESTÃO 1 — Gerenciamento de Tempo -->
+  <div class="questao ativa" data-index="0" data-categoria="tempo">
+    <p class="questao__categoria">Gerenciamento de Tempo</p>
+    <p class="questao__numero">Pergunta 1 de 12</p>
+    <h2 class="questao__texto">Com que frequência você passa mais tempo nas redes sociais do que pretendia?</h2>
+    <p class="questao__contexto">Pesquisas mostram que 61,2% dos adolescentes usam redes sociais por mais de 4h/dia — muitas vezes sem perceber a passagem do tempo. (Revistageo.com.br, 2024)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Raramente ou nunca acontece comigo</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Às vezes acontece, mas consigo me controlar</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Frequentemente — sempre acabo ficando mais do que planejei</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Sempre — perco completamente a noção do tempo quando estou nas redes</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario" disabled>← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 2 — Gerenciamento de Tempo -->
+  <div class="questao" data-index="1" data-categoria="tempo">
+    <p class="questao__categoria">Gerenciamento de Tempo</p>
+    <p class="questao__numero">Pergunta 2 de 12</p>
+    <h2 class="questao__texto">Você já deixou de fazer tarefas importantes por causa das redes sociais?</h2>
+    <p class="questao__contexto">Estudos associam o uso excessivo à queda no desempenho acadêmico e profissional. (Pedrollo e Vedana, 2021)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, mantenho minhas tarefas em dia sem problema</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Raramente, mas já aconteceu uma ou duas vezes</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Sim, com certa frequência deixo coisas para depois por causa das redes</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Sempre — as redes sociais interferem muito nas minhas obrigações</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 3 — Modificação do Humor -->
+  <div class="questao" data-index="2" data-categoria="humor">
+    <p class="questao__categoria">Modificação do Humor</p>
+    <p class="questao__numero">Pergunta 3 de 12</p>
+    <h2 class="questao__texto">Como você se sente quando fica um tempo sem acessar as redes sociais?</h2>
+    <p class="questao__contexto">A irritabilidade ao ficar desconectado é um dos principais sinais de dependência digital, segundo o IAT (Young, 1998) e estudos brasileiros validados.</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Normal, não faz diferença no meu humor</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Um pouco inquieto, mas passa rápido</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Fico visivelmente irritado, ansioso ou entediado</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Fico muito mal — angustiado até conseguir acessar de novo</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 4 — Modificação do Humor -->
+  <div class="questao" data-index="3" data-categoria="humor">
+    <p class="questao__categoria">Modificação do Humor</p>
+    <p class="questao__numero">Pergunta 4 de 12</p>
+    <h2 class="questao__texto">Você usa as redes sociais para fugir de problemas ou de sentimentos ruins?</h2>
+    <p class="questao__contexto">O mundo virtual como fuga de emoções negativas é um ciclo que aumenta a dependência e agrava sintomas de ansiedade. (Yücens e Uzer, 2018; RBIC, 2021)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, uso as redes por entretenimento, não como escape</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Às vezes, quando estou entediado ou frustrado</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Com frequência — as redes são minha válvula de escape habitual</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Sempre — não consigo lidar com sentimentos difíceis sem recorrer às redes</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 5 — Perda de Controle -->
+  <div class="questao" data-index="4" data-categoria="controle">
+    <p class="questao__categoria">Perda de Controle</p>
+    <p class="questao__numero">Pergunta 5 de 12</p>
+    <h2 class="questao__texto">Você já tentou reduzir o uso das redes sociais e não conseguiu?</h2>
+    <p class="questao__contexto">A dificuldade em controlar o período de uso é um marcador central da adicção digital. (Macedo, 2018; Moura, 2021 — citados na Revista Foco, 2024)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, consigo reduzir sem dificuldade quando quero</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Já tentei e consegui, mas foi mais difícil do que esperava</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Já tentei várias vezes e não consigo manter a redução por muito tempo</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Nunca consigo — sempre volto ao mesmo padrão ou uso ainda mais</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 6 — Perda de Controle -->
+  <div class="questao" data-index="5" data-categoria="controle">
+    <p class="questao__categoria">Perda de Controle</p>
+    <p class="questao__numero">Pergunta 6 de 12</p>
+    <h2 class="questao__texto">Com que frequência você checa as redes sociais sem um motivo claro — só por impulso?</h2>
+    <p class="questao__contexto">Verificar o celular compulsivamente é um dos comportamentos de abstinência mais comuns da adicção digital. (IAT — Young, 1998; Machado et al., 2018)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Raramente, abro as redes quando tenho um motivo</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Algumas vezes por dia, mas sem exagero</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Muitas vezes — verifico o celular constantemente sem nem perceber</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Todo o tempo — é quase um reflexo involuntário</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 7 — Isolamento Social -->
+  <div class="questao" data-index="6" data-categoria="social">
+    <p class="questao__categoria">Isolamento Social</p>
+    <p class="questao__numero">Pergunta 7 de 12</p>
+    <h2 class="questao__texto">Você já deixou de sair ou recusou programas com pessoas reais para ficar nas redes?</h2>
+    <p class="questao__contexto">O distanciamento das relações presenciais em favor do mundo virtual é um sinal de alerta de isolamento social digital. (Moromizato et al., 2017; RBIC, 2021)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, sempre priorizo o encontro presencial</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Raramente aconteceu, mas não é meu padrão</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Já aconteceu algumas vezes — prefiro ficar em casa nas redes</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Frequentemente — me sinto mais confortável nas redes do que pessoalmente</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 8 — Isolamento Social -->
+  <div class="questao" data-index="7" data-categoria="social">
+    <p class="questao__categoria">Isolamento Social</p>
+    <p class="questao__numero">Pergunta 8 de 12</p>
+    <h2 class="questao__texto">Alguém próximo (família, amigos) já reclamou que você passa tempo demais no celular?</h2>
+    <p class="questao__contexto">O impacto nas relações interpessoais é um dos critérios diagnósticos para dependência de internet. (IAT — Young, 1998; Revista Foco, 2024)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, nunca recebi esse comentário</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Uma vez ou outra, mas não é algo recorrente</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Sim, já ouvi isso algumas vezes de pessoas próximas</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Frequentemente — já gerou conflitos por causa disso</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 9 — Sono -->
+  <div class="questao" data-index="8" data-categoria="sono">
+    <p class="questao__categoria">Distúrbios do Sono</p>
+    <p class="questao__numero">Pergunta 9 de 12</p>
+    <h2 class="questao__texto">Com que frequência você usa as redes sociais pouco antes de dormir ou na cama?</h2>
+    <p class="questao__contexto">Distúrbios do sono por uso de tela são uma das principais consequências do uso excessivo. A luz azul e o estímulo mental das notificações comprometem a qualidade do sono. (Grillo et al., 2023; Revista Foco, 2024)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Raramente, tenho o hábito de desligar o celular cedo</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Às vezes, mas tento evitar</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Com frequência — é quase um ritual antes de dormir</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Todo dia — fico nas redes até tarde e muitas vezes isso atrapalha meu sono</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 10 — Sono -->
+  <div class="questao" data-index="9" data-categoria="sono">
+    <p class="questao__categoria">Distúrbios do Sono</p>
+    <p class="questao__numero">Pergunta 10 de 12</p>
+    <h2 class="questao__texto">Ao acordar, uma das primeiras coisas que você faz é checar as redes sociais?</h2>
+    <p class="questao__contexto">Verificar redes sociais ao acordar é um dos comportamentos de maior dependência — o cérebro inicia o dia já em modo reativo e ansioso. (Wang et al., 2018)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, cuido de outras coisas antes de ver o celular</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Às vezes, mas não é sempre</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Na maioria dos dias, sim</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Sempre — é a primeira coisa que faço, antes mesmo de sair da cama</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 11 — Substituição da Realidade -->
+  <div class="questao" data-index="10" data-categoria="realidade">
+    <p class="questao__categoria">Substituição da Realidade</p>
+    <p class="questao__numero">Pergunta 11 de 12</p>
+    <h2 class="questao__texto">Você já se sentiu mal ao comparar sua vida com o que vê nas redes sociais?</h2>
+    <p class="questao__contexto">A comparação constante com vidas editadas é um dos principais mecanismos de baixa autoestima e depressão associados ao uso de redes. (Cheng et al., 2023; Melo et al., 2023)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, sei que as redes mostram apenas a parte positiva da vida das pessoas</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Já aconteceu, mas consigo me reconcentrar rápido</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Com certa frequência — isso afeta meu humor e minha autoestima</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Frequentemente — sinto que minha vida é inferior e isso me deixa para baixo</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--primario btn-proximo" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- QUESTÃO 12 — Substituição da Realidade -->
+  <div class="questao" data-index="11" data-categoria="realidade">
+    <p class="questao__categoria">Substituição da Realidade</p>
+    <p class="questao__numero">Pergunta 12 de 12</p>
+    <h2 class="questao__texto">Você sente que precisa das redes sociais para se sentir parte de algo ou para não se sentir sozinho?</h2>
+    <p class="questao__contexto">Usar as redes como substituto para conexão emocional real é um dos fatores preditores de uso problemático. (Fonsêca et al., 2018; EUGPI2, revisão portuguesa, 2021)</p>
+    <ul class="opcoes">
+      <li class="opcao" data-valor="0"><span class="opcao__letra">A</span><div class="opcao__corpo"><span class="opcao__texto">Não, me sinto parte de algo mesmo sem as redes</span><span class="opcao__pontos">0 pts</span></div></li>
+      <li class="opcao" data-valor="1"><span class="opcao__letra">B</span><div class="opcao__corpo"><span class="opcao__texto">Um pouco — as redes ajudam mas não são essenciais para isso</span><span class="opcao__pontos">1 pt</span></div></li>
+      <li class="opcao" data-valor="2"><span class="opcao__letra">C</span><div class="opcao__corpo"><span class="opcao__texto">Sim, as redes são importantes para me sentir conectado ao mundo</span><span class="opcao__pontos">2 pts</span></div></li>
+      <li class="opcao" data-valor="3"><span class="opcao__letra">D</span><div class="opcao__corpo"><span class="opcao__texto">Completamente — sem as redes me sinto excluído e muito sozinho</span><span class="opcao__pontos">3 pts</span></div></li>
+    </ul>
+    <div class="nav-quiz">
+      <button class="btn btn--secundario btn-anterior">← Anterior</button>
+      <button class="btn btn--finalizar btn-finalizar" disabled>Ver meu resultado ✓</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════ RESULTADO ══════════ -->
+<section class="resultado" id="resultado">
+
+  <!-- Header dinâmico -->
+  <div class="resultado__header" id="resultado-header">
+    <span class="resultado__emoji" id="res-emoji"></span>
+    <p class="resultado__nivel" id="res-nivel"></p>
+    <h2 class="resultado__titulo" id="res-titulo"></h2>
+    <div class="resultado__pontuacao">
+      <strong id="res-pontos"></strong>
+      pontos de 36 possíveis
+    </div>
+    <p class="resultado__descricao" id="res-descricao"></p>
+  </div>
+
+  <!-- Perfil por dimensão -->
+  <div class="dimensoes">
+    <h3 class="dimensoes__titulo">Seu perfil por área</h3>
+    <p class="dimensoes__sub">Veja em quais dimensões você teve maior pontuação — cada uma representa um aspecto diferente da sua relação com as redes sociais.</p>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">⏰ Gerenciamento de Tempo</span>
+        <span class="dim-item__valor" id="dim-tempo-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-tempo-fill"></div></div>
+      <p class="dim-item__obs" id="dim-tempo-obs"></p>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">😶 Modificação do Humor</span>
+        <span class="dim-item__valor" id="dim-humor-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-humor-fill"></div></div>
+      <p class="dim-item__obs" id="dim-humor-obs"></p>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">🔁 Perda de Controle</span>
+        <span class="dim-item__valor" id="dim-controle-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-controle-fill"></div></div>
+      <p class="dim-item__obs" id="dim-controle-obs"></p>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">👥 Isolamento Social</span>
+        <span class="dim-item__valor" id="dim-social-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-social-fill"></div></div>
+      <p class="dim-item__obs" id="dim-social-obs"></p>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">🌙 Distúrbio do Sono</span>
+        <span class="dim-item__valor" id="dim-sono-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-sono-fill"></div></div>
+      <p class="dim-item__obs" id="dim-sono-obs"></p>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-item__header">
+        <span class="dim-item__nome">🪞 Substituição da Realidade</span>
+        <span class="dim-item__valor" id="dim-realidade-val"></span>
+      </div>
+      <div class="dim-barra"><div class="dim-barra__fill" id="dim-realidade-fill"></div></div>
+      <p class="dim-item__obs" id="dim-realidade-obs"></p>
+    </div>
+  </div>
+
+  <!-- Recomendações -->
+  <div class="recomendacoes">
+    <h3 class="recomendacoes__titulo">O que você pode fazer</h3>
+    <p class="recomendacoes__sub">Recomendações baseadas no seu resultado</p>
+    <ul class="rec-lista" id="rec-lista"></ul>
+  </div>
+
+  <!-- Fonte científica -->
+  <div class="fonte-box">
+    <p><strong>Base científica:</strong> Este quiz foi desenvolvido com base nas 6 dimensões do <strong>Internet Addiction Test (IAT)</strong>, criado por Kimberly Young (1998) e validado no Brasil (2012) e em Portugal (2014). As dimensões avaliadas são: gerenciamento de tempo, conflitos emocionais / modificação do humor, comportamentos de abstinência / perda de controle, isolamento e problemas sociais, distúrbios do sono e substituição da realidade. Este instrumento é o mais utilizado mundialmente para rastreamento da adicção em internet e apresenta propriedades psicométricas satisfatórias (α de Cronbach ≥ 0,87).</p>
+    <p style="margin-top:8px"><strong>Atenção:</strong> Este quiz é uma ferramenta de reflexão e conscientização, não substitui avaliação clínica. Se você se identificou com muitas situações de alto impacto, considere conversar com um psicólogo.</p>
+  </div>
+
+  <!-- Ações -->
+  <div class="acoes-finais">
+    <button class="btn--refazer" id="btn-refazer">↺ Refazer o quiz</button>
+    <a href="index.html" class= "btn--refazer" >Encontre Sua Atividade Cultural →</a>
+  </div>
+
+</section>
+
+<script>
+// ══════════════════════════════════════════════
+//  DADOS DO QUIZ
+// ══════════════════════════════════════════════
+const CATEGORIAS = ['tempo','tempo','humor','humor','controle','controle','social','social','sono','sono','realidade','realidade'];
+const CAT_IDS    = { tempo:'cat-tempo', humor:'cat-humor', controle:'cat-controle', social:'cat-social', sono:'cat-sono', realidade:'cat-realidade' };
+
+const DIM_OBS = {
+  tempo: [
+    'Você tem boa gestão do seu tempo online.',
+    'Atenção: seu tempo nas redes pode estar começando a escapar do controle.',
+    'Alerta: você está perdendo tempo significativo para as redes sociais.',
+  ],
+  humor: [
+    'Seu humor não depende das redes — ótimo sinal.',
+    'Atenção: você usa as redes como regulador emocional com alguma frequência.',
+    'Alerta: as redes sociais estão interferindo bastante no seu estado emocional.',
+  ],
+  controle: [
+    'Você mantém o controle do seu uso — continue assim.',
+    'Atenção: a compulsividade começa a aparecer. Vale observar.',
+    'Alerta: você apresenta sinais claros de comportamento compulsivo digital.',
+  ],
+  social: [
+    'Suas relações presenciais estão preservadas — muito bom.',
+    'Atenção: o isolamento digital pode estar afetando seus relacionamentos.',
+    'Alerta: sua vida social offline está sendo prejudicada pelo uso das redes.',
+  ],
+  sono: [
+    'Seu sono não está sendo comprometido pelo uso das redes.',
+    'Atenção: as telas à noite podem estar afetando a qualidade do seu sono.',
+    'Alerta: o uso das redes está claramente interferindo na sua higiene do sono.',
+  ],
+  realidade: [
+    'Você tem uma visão crítica saudável sobre as redes.',
+    'Atenção: a comparação online começa a afetar sua autopercepção.',
+    'Alerta: as redes estão distorcendo sua percepção de si mesmo e do mundo.',
+  ],
+};
+
+const RESULTADOS = [
+  {
+    min: 0, max: 9,
+    cor: 'verde', emoji: '🌿',
+    nivel: 'Uso Saudável',
+    titulo: 'Você tem uma relação equilibrada com as redes',
+    descricao: 'Parabéns! Você usa as redes sociais de forma consciente e controlada. Seu uso não interfere significativamente no sono, nas relações ou no humor. Continue assim — e mantenha esse equilíbrio verificando seu comportamento periodicamente.',
+    recs: [
+      { icon: '✅', texto: 'Continue monitorando seu tempo de uso — a conscientização é o que mantém o equilíbrio.' },
+      { icon: '🌿', texto: 'Aproveite para cultivar atividades presenciais: esportes, cultura, encontros com amigos.' },
+      { icon: '📚', texto: 'Compartilhe o que você aprendeu aqui com pessoas próximas que podem se beneficiar.' },
+    ],
+  },
+  {
+    min: 10, max: 19,
+    cor: 'amarelo', emoji: '⚡',
+    nivel: 'Zona de Atenção',
+    titulo: 'Alguns sinais de desequilíbrio estão aparecendo',
+    descricao: 'Seu uso já apresenta padrões que merecem atenção. Você pode estar se deixando levar pelas redes com mais frequência do que gostaria, e isso pode estar afetando pequenas áreas da sua vida — sono, humor ou tempo. É o momento certo para agir antes que o hábito se consolide.',
+    recs: [
+      { icon: '⏱️', texto: 'Ative o controle de tempo de tela no celular e defina limites diários por aplicativo.' },
+      { icon: '📵', texto: 'Crie uma zona livre de celular: pelo menos 30 minutos antes de dormir e ao acordar.' },
+      { icon: '🗓️', texto: 'Planeje pelo menos uma atividade presencial por semana para substituir tempo nas redes.' },
+      { icon: '🔔', texto: 'Desative notificações não essenciais — isso reduz a checagem compulsiva imediata.' },
+    ],
+  },
+  {
+    min: 20, max: 27,
+    cor: 'laranja', emoji: '🔥',
+    nivel: 'Uso Problemático',
+    titulo: 'As redes sociais estão interferindo na sua vida',
+    descricao: 'Seu resultado indica um uso problemático, com impactos visíveis em pelo menos algumas áreas importantes da sua vida — relacionamentos, humor, sono ou produtividade. Pesquisas mostram que cerca de 21% dos adolescentes brasileiros estão nessa faixa. A boa notícia é que é possível mudar com passos concretos e consistentes.',
+    recs: [
+      { icon: '🧠', texto: 'Reconheça os gatilhos: em que situações você recorre mais às redes? Tédio, tristeza, ansiedade?' },
+      { icon: '🔄', texto: 'Substitua o hábito: toda vez que sentir o impulso de abrir o celular, faça outra coisa por 5 minutos.' },
+      { icon: '👥', texto: 'Converse com pessoas próximas sobre seu objetivo de reduzir o uso — o apoio social ajuda muito.' },
+      { icon: '🎯', texto: 'Estabeleça "janelas" de uso: horários fixos para ver as redes, fora disso, celular guardado.' },
+      { icon: '🏃', texto: 'Pratique atividade física regularmente — ela é uma das melhores formas de liberar dopamina de forma saudável.' },
+    ],
+  },
+  {
+    min: 28, max: 36,
+    cor: 'vermelho', emoji: '🆘',
+    nivel: 'Dependência Digital',
+    titulo: 'Seu uso indica padrões sérios de dependência',
+    descricao: 'Seus resultados indicam padrões alinhados ao que pesquisadores chamam de adicção digital — um uso compulsivo que interfere de forma significativa em várias áreas da sua vida. Isso não é fraqueza de caráter: é um comportamento reforçado por algoritmos projetados para prender sua atenção. O mais importante agora é buscar ajuda especializada.',
+    recs: [
+      { icon: '🩺', texto: 'Considere procurar um psicólogo ou profissional de saúde mental — a terapia cognitivo-comportamental tem eficácia comprovada para adicção digital.' },
+      { icon: '📵', texto: 'Comece com um "detox digital" parcial: escolha um dia da semana sem redes sociais.' },
+      { icon: '🔒', texto: 'Use aplicativos de bloqueio (como o Freedom ou o Opal) para criar barreiras técnicas ao acesso compulsivo.' },
+      { icon: '❤️', texto: 'Converse abertamente com alguém de confiança sobre o que você está sentindo — o isolamento piora o quadro.' },
+      { icon: '🌍', texto: 'Busque atividades culturais e comunitárias na sua cidade — conexão real é o antídoto mais eficaz.' },
+    ],
+  },
+];
+
+// ══════════════════════════════════════════════
+//  ESTADO
+// ══════════════════════════════════════════════
+const questoes   = document.querySelectorAll('.questao');
+const totalQ     = questoes.length;
+let respostas    = new Array(totalQ).fill(null);
+let qAtual       = 0;
+
+// ══════════════════════════════════════════════
+//  FUNÇÕES AUXILIARES
+// ══════════════════════════════════════════════
+function atualizarProgresso() {
+  const respondidas = respostas.filter(r => r !== null).length;
+  const pct = Math.round((qAtual / totalQ) * 100);
+  document.getElementById('q-atual').textContent = qAtual + 1;
+  document.getElementById('pct').textContent = pct;
+  document.getElementById('barra-fill').style.width = pct + '%';
+
+  // Categorias ativas (respondidas)
+  const catsRespondidas = new Set();
+  respostas.forEach((r, i) => { if (r !== null) catsRespondidas.add(CATEGORIAS[i]); });
+  Object.keys(CAT_IDS).forEach(cat => {
+    document.getElementById(CAT_IDS[cat]).classList.toggle('ativo', catsRespondidas.has(cat));
+  });
+}
+
+function irPara(index) {
+  questoes[qAtual].classList.remove('ativa');
+  qAtual = index;
+  questoes[qAtual].classList.add('ativa');
+  atualizarProgresso();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function corDaDimensao(pct) {
+  if (pct <= 33)  return 'fill--verde';
+  if (pct <= 60)  return 'fill--amarelo';
+  if (pct <= 83)  return 'fill--laranja';
+  return 'fill--vermelho';
+}
+
+function obsIndex(pontos) {
+  if (pontos <= 1) return 0;
+  if (pontos <= 3) return 1;
+  return 2;
+}
+
+function mostrarResultado() {
+  document.getElementById('quiz-area').style.display    = 'none';
+  document.getElementById('progresso-wrap').style.display = 'none';
+  const sec = document.getElementById('resultado');
+  sec.classList.add('ativo');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Pontuação por dimensão
+  const dims = { tempo:0, humor:0, controle:0, social:0, sono:0, realidade:0 };
+  respostas.forEach((val, i) => { dims[CATEGORIAS[i]] += val; });
+  const total = Object.values(dims).reduce((a,b) => a + b, 0);
+
+  // Resultado geral
+  const res = RESULTADOS.find(r => total >= r.min && total <= r.max);
+  const header = document.getElementById('resultado-header');
+  header.className = 'resultado__header resultado__header--' + res.cor;
+  document.getElementById('res-emoji').textContent    = res.emoji;
+  document.getElementById('res-nivel').innerHTML      = `<span class="nivel--${res.cor}">${res.nivel}</span>`;
+  document.getElementById('res-titulo').textContent   = res.titulo;
+  document.getElementById('res-pontos').textContent   = total;
+  document.getElementById('res-descricao').textContent = res.descricao;
+
+  // Dimensões
+  Object.keys(dims).forEach(dim => {
+    const pts  = dims[dim];
+    const pct  = Math.round((pts / 6) * 100);
+    const cor  = corDaDimensao(pct);
+    const obs  = DIM_OBS[dim][obsIndex(pts)];
+    document.getElementById(`dim-${dim}-val`).textContent      = `${pts}/6 pts`;
+    const fill = document.getElementById(`dim-${dim}-fill`);
+    fill.style.width = '0%';
+    fill.className   = 'dim-barra__fill ' + cor;
+    setTimeout(() => { fill.style.width = pct + '%'; }, 100);
+    document.getElementById(`dim-${dim}-obs`).textContent = obs;
+  });
+
+  // Recomendações
+  const lista = document.getElementById('rec-lista');
+  lista.innerHTML = res.recs.map(r =>
+    `<li><span class="rec-icone">${r.icon}</span><span>${r.texto}</span></li>`
+  ).join('');
+}
+
+// ══════════════════════════════════════════════
+//  EVENTOS
+// ══════════════════════════════════════════════
+questoes.forEach((q, qi) => {
+  const opcoes  = q.querySelectorAll('.opcao');
+  const btnProx = q.querySelector('.btn-proximo');
+  const btnFin  = q.querySelector('.btn-finalizar');
+  const btnAnt  = q.querySelector('.btn-anterior');
+
+  opcoes.forEach(op => {
+    op.addEventListener('click', () => {
+      opcoes.forEach(o => o.classList.remove('selecionada'));
+      op.classList.add('selecionada');
+      respostas[qi] = parseInt(op.dataset.valor);
+      if (btnProx) btnProx.disabled = false;
+      if (btnFin)  btnFin.disabled  = false;
+    });
+  });
+
+  // Pré-seleciona se já respondido
+  if (respostas[qi] !== null) {
+    opcoes.forEach(op => {
+      if (parseInt(op.dataset.valor) === respostas[qi]) {
+        op.classList.add('selecionada');
+        if (btnProx) btnProx.disabled = false;
+        if (btnFin)  btnFin.disabled  = false;
+      }
+    });
+  }
+
+  if (btnAnt) {
+    btnAnt.addEventListener('click', () => irPara(qi - 1));
+  }
+
+  if (btnProx) {
+    btnProx.addEventListener('click', () => {
+      if (respostas[qi] !== null) irPara(qi + 1);
+    });
+  }
+
+  if (btnFin) {
+    btnFin.addEventListener('click', () => {
+      if (respostas[qi] !== null) mostrarResultado();
+    });
+  }
+});
+
+// Refazer
+document.getElementById('btn-refazer').addEventListener('click', () => {
+  respostas = new Array(totalQ).fill(null);
+  qAtual = 0;
+  questoes.forEach(q => {
+    q.classList.remove('ativa');
+    q.querySelectorAll('.opcao').forEach(o => o.classList.remove('selecionada'));
+    const bp = q.querySelector('.btn-proximo');
+    const bf = q.querySelector('.btn-finalizar');
+    if (bp) bp.disabled = true;
+    if (bf) bf.disabled = true;
+  });
+  questoes[0].classList.add('ativa');
+  document.getElementById('resultado').classList.remove('ativo');
+  document.getElementById('quiz-area').style.display    = '';
+  document.getElementById('progresso-wrap').style.display = '';
+  atualizarProgresso();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Inicializa progresso
+atualizarProgresso();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SISTEMA DE MÚSICA IMERSIVA — Quiz IAT
+     Baseado na psicologia das emoções e design sonoro adaptativo.
+     Tokens de cor: verde | amarelo | laranja | vermelho
+     Inserir antes de </body> — depende apenas do quiz já existente.
+═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ──────────────────────────────────────────────────────────────
+   1. OBJETO DE CONFIGURAÇÃO DE MÚSICAS
+   Cada entrada possui:
+     mood        → descrição emocional exibida na UI
+     url         → link de áudio (substitua pelos seus arquivos)
+     bpm         → faixa de BPM da trilha (informativo)
+     justificativa → base psicológica da escolha
+   ────────────────────────────────────────────────────────────── */
+const MUSICAS = {
+
+  verde: {
+    mood: 'Trilha Relaxante · Lo-fi Ambiente',
+    bpm: '65–75 BPM',
+    /* 
+      Verde = Equilíbrio e bem-estar.
+      Áudio Lo-fi com tons maiores (dó maior / ré maior) e textura
+      de piano suave. Pesquisas em musicoterapia mostram que BPMs
+      entre 60–80 sincronizam com a frequência cardíaca em repouso,
+      promovendo calma e reforço positivo.
+      (Thaut, 2014 — Rhythm, Music and the Brain)
+    */
+    justificativa: 'Tons maiores e BPM próximo ao coração em repouso reforçam o estado de equilíbrio.',
+    /*
+      ► SUBSTITUA a URL abaixo pelo seu arquivo de áudio.
+      ► Formatos suportados: .mp3 | .ogg | .wav
+      ► Sugestões gratuitas: Pixabay.com, FreeMusicArchive.org, Lofi.co
+      ► Exemplo real (Pixabay — Lofi Chill): 
+        'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3'
+    */
+    url: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3',
+  },
+
+  amarelo: {
+    mood: 'Trilha Neutra · Focus Minimalista',
+    bpm: '72–85 BPM',
+    /*
+      Amarelo = Atenção, alerta leve.
+      Música minimalista estilo "Focus" com piano e sintetizadores
+      suaves, sem letra. Ambiente neutro que não provoca nem alivia —
+      mantém o usuário em estado de reflexão consciente.
+      (Ritter & Ferguson, 2017 — Listening to music in the background)
+    */
+    justificativa: 'Minimalismo sonoro mantém a atenção sem desviar a reflexão — estado de vigilância tranquila.',
+    url: 'samuelfjohanns-minimal-109310.mp3',
+  },
+
+  laranja: {
+    mood: 'Trilha Reflexiva · Cordas e Textura',
+    bpm: '55–70 BPM',
+    /*
+      Laranja = Conflito interno, uso problemático.
+      Cordas (violoncelo) com leve dissonância e resolução incompleta.
+      A tensão harmônica não resolvida cria um estado de inquietação
+      que estimula a reflexão sobre mudança de comportamento.
+      Técnica: "Unresolved Cadence" como gatilho emocional.
+      (Huron, 2006 — Sweet Anticipation: Music and the Psychology of Expectation)
+    */
+    justificativa: 'Dissonância leve e cordas evocam inquietação reflexiva — estado propício para reconhecer problemas.',
+    url: 'sergequadrado-suspense-piano-90163.mp3',
+  },
+
+  vermelho: {
+    mood: 'Trilha Introspectiva · Pulso Profundo',
+    bpm: '48–58 BPM',
+    /*
+      Vermelho = Dependência digital, estado crítico.
+      Música introspectiva e profunda com batidas lentas que evocam
+      um pulso cardíaco — criando consciência corporal e urgência
+      emocional. BPMs abaixo de 60 ativam o sistema nervoso
+      parassimpático mas com gravidade, gerando reflexão profunda.
+      (Thayer & Faith, 2001 — Music and emotion)
+    */
+    justificativa: 'Pulso lento e grave cria consciência corporal — espelho sonoro do estado de dependência.',
+    url: 'ovrsoull-dark-ambient-cinematic-drone-investigative-pulse-minimalist-tension-454723.mp3',
+  },
+};
+
+/* ──────────────────────────────────────────────────────────────
+   2. ESTADO INTERNO DO SISTEMA DE ÁUDIO
+   ────────────────────────────────────────────────────────────── */
+const AudioSistema = {
+  elemento:      null,   // <audio> injetado no DOM
+  fadeInterval:  null,   // referência do setInterval do fade-in
+  mutado:        false,  // estado do botão de mudo
+  corAtual:      null,   // cor do resultado atual
+  FADE_DURACAO:  2500,   // ms para o fade-in completar
+  FADE_PASSOS:   50,     // quantos steps do fade
+  VOLUME_FINAL:  0.45,   // volume máximo (0 a 1)
+};
+
+/* ──────────────────────────────────────────────────────────────
+   3. FUNÇÃO PRINCIPAL: configurarMusica(cor)
+   Chamada logo após mostrarResultado() renderizar o resultado.
+   ────────────────────────────────────────────────────────────── */
+function configurarMusica(cor) {
+  const config = MUSICAS[cor];
+  if (!config) return;
+
+  AudioSistema.corAtual = cor;
+
+  /* 3a. Para qualquer áudio anterior e limpa o fade */
+  pararMusica(false);
+
+  /* 3b. Cria ou reutiliza o elemento <audio> */
+  if (!AudioSistema.elemento) {
+    AudioSistema.elemento = document.createElement('audio');
+    AudioSistema.elemento.loop   = true;
+    AudioSistema.elemento.preload = 'auto';
+    document.body.appendChild(AudioSistema.elemento);
+  }
+
+  const audio = AudioSistema.elemento;
+  audio.src    = config.url;
+  audio.volume = 0; // começa silencioso para o fade-in
+
+  /* 3c. Tenta reproduzir (captura bloqueio de autoplay do navegador) */
+  const tentativaPlay = audio.play();
+
+  if (tentativaPlay !== undefined) {
+    tentativaPlay
+      .then(() => {
+        /* Áudio iniciou: executa fade-in */
+        _executarFadeIn(audio);
+        _atualizarStatusAudio(cor, 'tocando');
+      })
+      .catch(() => {
+        /*
+          Navegador bloqueou autoplay (política comum em desktop).
+          Exibimos o status com ícone de "aguardando interação"
+          e aguardamos o primeiro clique do usuário para iniciar.
+        */
+        _atualizarStatusAudio(cor, 'aguardando');
+        _configurarInicioComInteracao(audio, cor);
+      });
+  }
+
+  /* 3d. Exibe e configura o botão flutuante */
+  _exibirBotaoMudo(cor);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   3b. FADE-IN GRADUAL
+   ────────────────────────────────────────────────────────────── */
+function _executarFadeIn(audio) {
+  if (AudioSistema.fadeInterval) clearInterval(AudioSistema.fadeInterval);
+
+  const passo     = AudioSistema.VOLUME_FINAL / AudioSistema.FADE_PASSOS;
+  const intervalo = AudioSistema.FADE_DURACAO / AudioSistema.FADE_PASSOS;
+
+  AudioSistema.fadeInterval = setInterval(() => {
+    if (audio.volume < AudioSistema.VOLUME_FINAL - passo) {
+      audio.volume = Math.min(audio.volume + passo, AudioSistema.VOLUME_FINAL);
+    } else {
+      audio.volume = AudioSistema.VOLUME_FINAL;
+      clearInterval(AudioSistema.fadeInterval);
+      AudioSistema.fadeInterval = null;
+    }
+    /* Respeita o estado de mudo durante o fade */
+    if (AudioSistema.mutado) audio.volume = 0;
+  }, intervalo);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   3c. INÍCIO COM INTERAÇÃO (fallback para bloqueio de autoplay)
+   ────────────────────────────────────────────────────────────── */
+function _configurarInicioComInteracao(audio, cor) {
+  const iniciar = () => {
+    audio.play().then(() => {
+      _executarFadeIn(audio);
+      _atualizarStatusAudio(cor, 'tocando');
+    }).catch(() => {});
+    document.removeEventListener('click', iniciar);
+    document.removeEventListener('keydown', iniciar);
+  };
+  document.addEventListener('click',   iniciar, { once: true });
+  document.addEventListener('keydown', iniciar, { once: true });
+}
+
+/* ──────────────────────────────────────────────────────────────
+   4. PARAR MÚSICA (com ou sem fade-out)
+   ────────────────────────────────────────────────────────────── */
+function pararMusica(comFadeOut = true) {
+  if (AudioSistema.fadeInterval) {
+    clearInterval(AudioSistema.fadeInterval);
+    AudioSistema.fadeInterval = null;
+  }
+  if (!AudioSistema.elemento) return;
+
+  const audio = AudioSistema.elemento;
+
+  if (!comFadeOut || audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
+    return;
+  }
+
+  /* Fade-out suave em 800ms */
+  const passoOut  = audio.volume / 16;
+  const intervalo = 50;
+  const fadeOut   = setInterval(() => {
+    if (audio.volume > passoOut) {
+      audio.volume = Math.max(0, audio.volume - passoOut);
+    } else {
+      audio.volume = 0;
+      audio.pause();
+      audio.currentTime = 0;
+      clearInterval(fadeOut);
+    }
+  }, intervalo);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   5. STATUS DE ÁUDIO NA UI
+   Atualiza (ou cria) o painel de status dentro da tela de resultado.
+   ────────────────────────────────────────────────────────────── */
+function _atualizarStatusAudio(cor, estado) {
+  const config    = MUSICAS[cor];
+  const COR_HEX   = { verde:'#2d6a4f', amarelo:'#c9963a', laranja:'#e07b35', vermelho:'#c23b22' };
+  const hex       = COR_HEX[cor] || '#6b6456';
+
+  let painel = document.getElementById('audio-status-painel');
+
+  if (!painel) {
+    painel = document.createElement('div');
+    painel.id = 'audio-status-painel';
+    painel.style.cssText = `
+      max-width: 720px;
+      margin: 0 auto 8px;
+      padding: 14px 20px 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: .8rem;
+      color: #6b6456;
+      background: #fff;
+      border: 1.5px solid #e2dbc8;
+      border-left: 4px solid ${hex};
+      border-radius: 4px;
+      transition: border-left-color .5s;
+    `;
+
+    /* Insere antes das recomendações (após as dimensões) */
+    const recomendacoes = document.querySelector('.recomendacoes');
+    if (recomendacoes) {
+      recomendacoes.parentNode.insertBefore(painel, recomendacoes);
+    } else {
+      document.getElementById('resultado').prepend(painel);
+    }
+  }
+
+  painel.style.borderLeftColor = hex;
+
+  const icone  = estado === 'tocando' ? '🎵' : estado === 'aguardando' ? '👆' : '🔇';
+  const label  = estado === 'tocando'
+    ? `Tocando: <strong style="color:#0f0e0b">${config.mood}</strong>`
+    : estado === 'aguardando'
+    ? `Clique em qualquer lugar para iniciar: <strong style="color:#0f0e0b">${config.mood}</strong>`
+    : `Áudio silenciado`;
+
+  painel.innerHTML = `
+    <span style="font-size:1.15rem;flex-shrink:0">${icone}</span>
+    <div style="flex:1;line-height:1.5">
+      <div>${label}</div>
+      <div style="font-size:.7rem;opacity:.55;margin-top:2px">${config.bpm} · ${config.justificativa}</div>
+    </div>
+    <div id="audio-ondas" style="display:flex;align-items:flex-end;gap:2px;height:18px;flex-shrink:0">
+      ${estado === 'tocando' ? _gerarOndas(hex) : ''}
+    </div>
+  `;
+}
+
+/* Animação de ondas sonoras (CSS injetado dinamicamente) */
+function _gerarOndas(hex) {
+  if (!document.getElementById('audio-ondas-css')) {
+    const style = document.createElement('style');
+    style.id = 'audio-ondas-css';
+    style.textContent = `
+      @keyframes onda1 { 0%,100%{height:4px}  50%{height:14px} }
+      @keyframes onda2 { 0%,100%{height:8px}  50%{height:4px}  }
+      @keyframes onda3 { 0%,100%{height:12px} 50%{height:6px}  }
+      @keyframes onda4 { 0%,100%{height:5px}  50%{height:16px} }
+      @keyframes onda5 { 0%,100%{height:10px} 50%{height:3px}  }
+      .onda-bar {
+        width: 3px; border-radius: 2px; transition: background .5s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  const delays = [0, 0.3, 0.6, 0.15, 0.45];
+  const anims  = ['onda1','onda2','onda3','onda4','onda5'];
+  return delays.map((d, i) =>
+    `<div class="onda-bar" style="background:${hex};animation:${anims[i]} 1.1s ${d}s infinite"></div>`
+  ).join('');
+}
+
+/* ──────────────────────────────────────────────────────────────
+   6. BOTÃO FLUTUANTE DE MUDO / SOM
+   Aparece apenas na tela de resultado. Usa tokens CSS do :root.
+   ────────────────────────────────────────────────────────────── */
+function _exibirBotaoMudo(cor) {
+  const COR_HEX = { verde:'#2d6a4f', amarelo:'#c9963a', laranja:'#e07b35', vermelho:'#c23b22' };
+  const hex     = COR_HEX[cor] || '#0f0e0b';
+
+  /* Injeta CSS do botão uma única vez */
+  if (!document.getElementById('btn-mudo-css')) {
+    const style = document.createElement('style');
+    style.id = 'btn-mudo-css';
+    style.textContent = `
+      #btn-mudo-flutuante {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,.2);
+        transition: background .4s, transform .2s, box-shadow .2s;
+        background: var(--preto, #0f0e0b);
+        color: var(--creme, #f5f0e6);
+      }
+      #btn-mudo-flutuante:hover {
+        transform: scale(1.12);
+        box-shadow: 0 6px 28px rgba(0,0,0,.28);
+      }
+      #btn-mudo-flutuante.visivel { display: flex; animation: aparecerBtn .35s ease both; }
+      #btn-mudo-flutuante .tooltip-mudo {
+        position: absolute;
+        right: 60px;
+        background: var(--preto, #0f0e0b);
+        color: var(--creme, #f5f0e6);
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: .7rem;
+        white-space: nowrap;
+        padding: 5px 10px;
+        border-radius: 4px;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateX(6px);
+        transition: opacity .2s, transform .2s;
+      }
+      #btn-mudo-flutuante:hover .tooltip-mudo { opacity: 1; transform: translateX(0); }
+      @keyframes aparecerBtn {
+        from { opacity:0; transform:scale(.7) translateY(12px); }
+        to   { opacity:1; transform:scale(1)  translateY(0);    }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  /* Cria o botão se ainda não existe */
+  let btn = document.getElementById('btn-mudo-flutuante');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id            = 'btn-mudo-flutuante';
+    btn.setAttribute('aria-label', 'Silenciar ou ativar música');
+    btn.setAttribute('title',      'Silenciar / Ativar som');
+    btn.innerHTML     = `🔊<span class="tooltip-mudo">Silenciar música</span>`;
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', _toggleMudo);
+  }
+
+  /* Atualiza a cor de fundo conforme o resultado */
+  btn.style.background = hex;
+  AudioSistema.mutado  = false;
+  btn.innerHTML        = `🔊<span class="tooltip-mudo">Silenciar música</span>`;
+
+  /* Exibe com delay suave para não competir com a animação do resultado */
+  setTimeout(() => btn.classList.add('visivel'), 1200);
+}
+
+/* Esconde o botão flutuante */
+function _esconderBotaoMudo() {
+  const btn = document.getElementById('btn-mudo-flutuante');
+  if (btn) btn.classList.remove('visivel');
+}
+
+/* Toggle mudo / som */
+function _toggleMudo() {
+  const btn   = document.getElementById('btn-mudo-flutuante');
+  const audio = AudioSistema.elemento;
+  if (!audio) return;
+
+  AudioSistema.mutado = !AudioSistema.mutado;
+
+  if (AudioSistema.mutado) {
+    /* Fade-out rápido ao mutar */
+    if (AudioSistema.fadeInterval) {
+      clearInterval(AudioSistema.fadeInterval);
+      AudioSistema.fadeInterval = null;
+    }
+    audio.volume = 0;
+    btn.innerHTML = `🔇<span class="tooltip-mudo">Ativar música</span>`;
+    const painel = document.getElementById('audio-status-painel');
+    if (painel) _atualizarStatusAudio(AudioSistema.corAtual, 'mutado');
+  } else {
+    /* Retoma o fade-in a partir do volume atual */
+    _executarFadeIn(audio);
+    btn.innerHTML = `🔊<span class="tooltip-mudo">Silenciar música</span>`;
+    if (AudioSistema.corAtual) _atualizarStatusAudio(AudioSistema.corAtual, 'tocando');
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   7. GATILHO — Integração com mostrarResultado()
+   Substituímos a função original, adicionando a chamada ao sistema
+   de música logo após o resultado ser exibido.
+   ────────────────────────────────────────────────────────────── */
+const _mostrarResultadoOriginal = mostrarResultado;
+
+mostrarResultado = function () {
+  _mostrarResultadoOriginal();
+
+  /* Recupera a cor do resultado que acabou de ser calculado */
+  const respostas_ = typeof respostas !== 'undefined' ? respostas : [];
+  const CATEGORIAS_ = typeof CATEGORIAS !== 'undefined' ? CATEGORIAS : [];
+  const RESULTADOS_ = typeof RESULTADOS !== 'undefined' ? RESULTADOS : [];
+
+  const dims_ = { tempo:0, humor:0, controle:0, social:0, sono:0, realidade:0 };
+  respostas_.forEach((val, i) => { if (val !== null && CATEGORIAS_[i]) dims_[CATEGORIAS_[i]] += val; });
+  const total_ = Object.values(dims_).reduce((a,b) => a + b, 0);
+  const res_   = RESULTADOS_.find(r => total_ >= r.min && total_ <= r.max);
+
+  if (res_) {
+    /* Pequeno delay para a UI do resultado renderizar primeiro */
+    setTimeout(() => configurarMusica(res_.cor), 600);
+  }
+};
+
+/* ──────────────────────────────────────────────────────────────
+   8. PARA O ÁUDIO QUANDO O USUÁRIO REFAZ O QUIZ
+   Patchamos o evento do botão "Refazer" para encerrar o som.
+   ────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const btnRefazer = document.getElementById('btn-refazer');
+  if (btnRefazer) {
+    btnRefazer.addEventListener('click', () => {
+      pararMusica(true);        // fade-out suave
+      _esconderBotaoMudo();
+      const painel = document.getElementById('audio-status-painel');
+      if (painel) painel.remove();
+    }, true); /* capture: true — garante execução antes do handler original */
+  }
+});
+
+/* ──────────────────────────────────────────────────────────────
+   9. PARA O ÁUDIO AO SAIR DA PÁGINA
+   ────────────────────────────────────────────────────────────── */
+window.addEventListener('beforeunload', () => pararMusica(false));
+window.addEventListener('pagehide',     () => pararMusica(false));
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     INTEGRAÇÃO GOOGLE SHEETS VIA APPS SCRIPT
+     ───────────────────────────────────────────────────────────────
+     COMO CONFIGURAR (leia antes de usar):
+
+     PASSO 1 — Crie a planilha no Google Sheets
+       • Acesse sheets.google.com e crie uma planilha nova.
+       • Na linha 1 adicione os cabeçalhos exatamente assim:
+           A1: Data/Hora
+           B1: Pontuação
+           C1: Resultado
+           D1: Cor
+           E1: Nível
+           F1: Tempo (pts)
+           G1: Humor (pts)
+           H1: Controle (pts)
+           I1: Social (pts)
+           J1: Sono (pts)
+           K1: Realidade (pts)
+
+     PASSO 2 — Crie o Web App no Apps Script
+       • Com a planilha aberta, clique em Extensões → Apps Script.
+       • Apague tudo e cole o código abaixo:
+
+       ┌─────────────────────────────────────────────────────────┐
+       │  function doPost(e) {                                   │
+       │    try {                                                │
+       │      var dados = JSON.parse(e.postData.contents);      │
+       │      var planilha = SpreadsheetApp                      │
+       │        .getActiveSpreadsheet()                          │
+       │        .getActiveSheet();                               │
+       │      planilha.appendRow([                               │
+       │        dados.dataHora,                                  │
+       │        dados.pontuacao,                                 │
+       │        dados.resultado,                                 │
+       │        dados.cor,                                       │
+       │        dados.nivel,                                     │
+       │        dados.dims.tempo,                                │
+       │        dados.dims.humor,                                │
+       │        dados.dims.controle,                             │
+       │        dados.dims.social,                               │
+       │        dados.dims.sono,                                 │
+       │        dados.dims.realidade                             │
+       │      ]);                                                │
+       │      return ContentService                              │
+       │        .createTextOutput(JSON.stringify({ok:true}))     │
+       │        .setMimeType(ContentService.MimeType.JSON);      │
+       │    } catch(err) {                                       │
+       │      return ContentService                              │
+       │        .createTextOutput(JSON.stringify({               │
+       │          ok:false, erro: err.message                    │
+       │        }))                                              │
+       │        .setMimeType(ContentService.MimeType.JSON);      │
+       │    }                                                    │
+       │  }                                                      │
+       └─────────────────────────────────────────────────────────┘
+
+     PASSO 3 — Publique como Web App
+       • Clique em "Implantar" → "Nova implantação".
+       • Tipo: Web App.
+       • Executar como: Eu (sua conta Google).
+       • Quem tem acesso: Qualquer pessoa (anonymous).
+       • Clique em "Implantar" e copie a URL gerada.
+
+     PASSO 4 — Cole a URL aqui embaixo
+       • Substitua o valor de APPS_SCRIPT_URL pelo link copiado.
+       • A URL termina com /exec e começa com https://script.google.com/
+═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ──────────────────────────────────────────────────────────────
+   CONFIGURAÇÃO — EDITE APENAS ESTA LINHA
+   ────────────────────────────────────────────────────────────── */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysMeH-XqFXX6QqBQfc0T65H8onUYDto2-4Zmt2ih9dSpmMQhMnSraOqPxUrOuIZ4-x/exec';
+// Exemplo:
+// const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxABC.../exec';
+
+/* ──────────────────────────────────────────────────────────────
+   MÓDULO DE INTEGRAÇÃO COM GOOGLE SHEETS
+   Coleta: data/hora, pontuação total, resultado, cor, nível
+           e pontuação de cada uma das 6 dimensões do IAT.
+   ────────────────────────────────────────────────────────────── */
+const SheetsIntegracao = {
+
+  /* Guarda os dados do resultado atual para envio */
+  _dadosPendentes: null,
+
+  /* ── Monta o payload a partir do estado do quiz ── */
+  _coletarDados() {
+    // Reutiliza as variáveis globais já existentes no quiz
+    const respostas_   = typeof respostas   !== 'undefined' ? respostas   : [];
+    const CATEGORIAS_  = typeof CATEGORIAS  !== 'undefined' ? CATEGORIAS  : [];
+    const RESULTADOS_  = typeof RESULTADOS  !== 'undefined' ? RESULTADOS  : [];
+
+    // Recalcula dimensões
+    const dims = { tempo:0, humor:0, controle:0, social:0, sono:0, realidade:0 };
+    respostas_.forEach((val, i) => {
+      if (val !== null && CATEGORIAS_[i]) dims[CATEGORIAS_[i]] += val;
+    });
+    const total = Object.values(dims).reduce((a, b) => a + b, 0);
+    const res   = RESULTADOS_.find(r => total >= r.min && total <= r.max);
+
+    if (!res) return null;
+
+    // Formata data/hora no fuso do navegador
+    const agora     = new Date();
+    const dataHora  = agora.toLocaleString('pt-BR', {
+      day:    '2-digit',
+      month:  '2-digit',
+      year:   'numeric',
+      hour:   '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    return {
+      dataHora,
+      pontuacao:  total,
+      resultado:  res.titulo,
+      cor:        res.cor,
+      nivel:      res.nivel,
+      dims: {
+        tempo:      dims.tempo,
+        humor:      dims.humor,
+        controle:   dims.controle,
+        social:     dims.social,
+        sono:       dims.sono,
+        realidade:  dims.realidade,
+      },
+    };
+  },
+
+  /* ── Envia os dados para o Google Sheets ── */
+  async enviar() {
+    // Valida se a URL foi configurada
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'COLE_AQUI_A_URL_DO_SEU_WEB_APP') {
+      console.warn(
+        '[SheetsIntegracao] URL do Apps Script não configurada.\n' +
+        'Leia as instruções no bloco de comentários acima do script.'
+      );
+      _atualizarStatusEnvio('nao-configurado');
+      return;
+    }
+
+    const dados = this._coletarDados();
+    if (!dados) {
+      console.warn('[SheetsIntegracao] Não foi possível coletar os dados do quiz.');
+      return;
+    }
+
+    this._dadosPendentes = dados;
+    _atualizarStatusEnvio('enviando');
+
+    try {
+      /*
+        A API Fetch com mode:'no-cors' é necessária para chamadas
+        ao Apps Script de origens externas. A resposta não pode ser
+        lida diretamente, mas o registro na planilha ocorre normalmente.
+        Para leitura da resposta, use um proxy ou o modo 'cors' com
+        cabeçalhos configurados no Apps Script (avançado).
+      */
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',        // necessário para Apps Script público
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(dados),
+      });
+
+      // Com no-cors não conseguimos ler o status — assumimos sucesso
+      // se a requisição não lançou erro de rede.
+      _atualizarStatusEnvio('sucesso', dados);
+      console.info('[SheetsIntegracao] Dados enviados:', dados);
+
+    } catch (erro) {
+      // Erros de rede (offline, CORS bloqueado, URL inválida)
+      _atualizarStatusEnvio('erro', null, erro.message);
+      console.error('[SheetsIntegracao] Falha ao enviar:', erro);
+    }
+  },
+};
+
+/* ──────────────────────────────────────────────────────────────
+   UI — Painel de status do envio
+   Inserido abaixo da caixa de fonte científica no resultado.
+   ────────────────────────────────────────────────────────────── */
+function _atualizarStatusEnvio(estado, dados, erroMsg) {
+  let painel = document.getElementById('sheets-status-painel');
+
+  if (!painel) {
+    painel = document.createElement('div');
+    painel.id = 'sheets-status-painel';
+    painel.style.cssText = `
+      max-width: 720px;
+      margin: 0 auto 32px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: .8rem;
+      color: #6b6456;
+      background: #fff;
+      border: 1.5px solid #e2dbc8;
+      border-radius: 4px;
+      transition: border-color .4s;
+    `;
+
+    // Insere após a .fonte-box (caixa de referências científicas)
+    const fonteBox = document.querySelector('.fonte-box');
+    if (fonteBox && fonteBox.parentNode) {
+      fonteBox.parentNode.insertBefore(painel, fonteBox.nextSibling);
+    } else {
+      const acoes = document.querySelector('.acoes-finais');
+      if (acoes) acoes.parentNode.insertBefore(painel, acoes);
+    }
+  }
+
+  const CONFIGS = {
+    'enviando': {
+      icone:      '📡',
+      corBorda:   '#c9963a',
+      titulo:     'Registrando seu resultado…',
+      subtitulo:  'Conectando ao Google Sheets',
+    },
+    'sucesso': {
+      icone:      '✅',
+      corBorda:   '#2d6a4f',
+      titulo:     'Resultado registrado com sucesso',
+      subtitulo:  dados
+        ? `${dados.dataHora} · ${dados.pontuacao} pts · ${dados.nivel}`
+        : 'Dados salvos na planilha',
+    },
+    'erro': {
+      icone:      '⚠️',
+      corBorda:   '#c23b22',
+      titulo:     'Não foi possível registrar',
+      subtitulo:  erroMsg || 'Verifique sua conexão ou a URL do Apps Script',
+    },
+    'nao-configurado': {
+      icone:      '⚙️',
+      corBorda:   '#6b6456',
+      titulo:     'Integração com Sheets não configurada',
+      subtitulo:  'Leia as instruções no código para ativar o registro automático',
+    },
+  };
+
+  const cfg = CONFIGS[estado] || CONFIGS['nao-configurado'];
+  painel.style.borderColor = cfg.corBorda;
+
+  painel.innerHTML = `
+    <span style="font-size:1.2rem;flex-shrink:0;margin-top:1px">${cfg.icone}</span>
+    <div style="line-height:1.6">
+      <div style="font-weight:600;color:#0f0e0b">${cfg.titulo}</div>
+      <div style="font-size:.72rem;opacity:.65;margin-top:2px">${cfg.subtitulo}</div>
+    </div>
+  `;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   GATILHO — Conecta ao fluxo do mostrarResultado()
+   O wrapper já existe (criado pelo sistema de música).
+   Aqui fazemos um segundo patch seguro que não interfere no anterior.
+   ────────────────────────────────────────────────────────────── */
+(function conectarSheetsAoQuiz() {
+  // Aguarda a DOM estar pronta para garantir que o primeiro patch
+  // (sistema de música) já foi aplicado.
+  const _refAtual = mostrarResultado;
+
+  mostrarResultado = function () {
+    _refAtual(); // executa o chain anterior (original + música)
+
+    // Pequeno delay para garantir que o DOM do resultado foi renderizado
+    setTimeout(() => SheetsIntegracao.enviar(), 800);
+  };
+})();
+
+/* ──────────────────────────────────────────────────────────────
+   LIMPA O PAINEL DE STATUS AO REFAZER O QUIZ
+   ────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const btnRefazer = document.getElementById('btn-refazer');
+  if (btnRefazer) {
+    btnRefazer.addEventListener('click', () => {
+      const painel = document.getElementById('sheets-status-painel');
+      if (painel) painel.remove();
+    }, true);
+  }
+});
+</script>
+</body>
+</html>
