@@ -1002,30 +1002,91 @@ main.container {
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 60px 24px 64px;
+    padding: 40px 16px 48px;
   }
+
+  .hero__content {
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    line-height: 1.12;
+    letter-spacing: -.01em;
+    max-width: 100%;
+  }
+
+  .hero__title em {
+    display: inline;
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+    max-width: 100%;
+    margin-bottom: 28px;
+  }
+
   .hero__stats {
-    flex-direction: row;
+    flex-direction: column;
+    gap: 18px;
     padding-right: 0;
-    gap: 24px;
   }
-  .stat { text-align: left; }
-  .stat__num { font-size: 2rem; }
+
+  .stat {
+    width: 100%;
+    text-align: left;
+  }
+
+  .stat__num {
+    font-size: 1.9rem;
+  }
+
+  .hero__badge {
+    font-size: .72rem;
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+
+  .hero__cta {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 20px;
+  }
+
+  .hero::after {
+    right: -36px;
+    top: -36px;
+    width: 280px;
+    height: 280px;
+    border-width: 44px;
+  }
+
+  .hero__noise {
+    background-size: cover, 260px 260px;
+  }
 
   .filtros-grid {
     grid-template-columns: 1fr;
   }
-  .filtro-grupo--wide { grid-column: span 1; }
-  .filtro-grupo--action { grid-column: span 1; }
+
+  .filtro-grupo--wide,
+  .filtro-grupo--action {
+    grid-column: span 1;
+  }
 
   .cards-grid {
     grid-template-columns: 1fr;
   }
 
-  .modal__body { padding: 24px; }
-  .modal-nome { font-size: 1.3rem; }
+  .modal__body {
+    padding: 24px;
+  }
 
-   
+  .modal-nome {
+    font-size: 1.3rem;
+  }
+
   .hero__title,
   .hero__subtitle,
   .filtro-label,
@@ -1037,7 +1098,7 @@ main.container {
   .modal-nome,
   .modal-entidade {
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     word-break: break-word;
   }
 
@@ -1049,11 +1110,11 @@ main.container {
     width: 100%;
   }
 
-  .hero__subtitle {
-    max-width: 100%;
+  .filtro-label {
+    font-size: .72rem;
   }
 
-  .hero { padding: 48px 16px 56px; }
-  .filtro-label { font-size: .72rem; }
-  .filtro-checkbox { font-size: .9rem; }
+  .filtro-checkbox {
+    font-size: .9rem;
+  }
 }
