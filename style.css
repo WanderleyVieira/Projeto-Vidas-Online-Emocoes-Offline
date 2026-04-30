@@ -1024,4 +1024,36 @@ main.container {
 
   .modal__body { padding: 24px; }
   .modal-nome { font-size: 1.3rem; }
+
+   
+  .hero__title,
+  .hero__subtitle,
+  .filtro-label,
+  .filtro-checkbox,
+  .filtro-input,
+  .filtro-select,
+  .card,
+  .card__body,
+  .modal-nome,
+  .modal-entidade {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .hero__content,
+  .hero__stats,
+  .filtros-grid,
+  .cards-grid,
+  .card__body {
+    width: 100%;
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+  }
+
+  .hero { padding: 48px 16px 56px; }
+  .filtro-label { font-size: .72rem; }
+  .filtro-checkbox { font-size: .9rem; }
 }
